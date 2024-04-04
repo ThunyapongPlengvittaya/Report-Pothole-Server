@@ -13,12 +13,17 @@ def predict():
         return jsonify({'error': 'No selected image'}), 400
 
     try:
-        print('hello world')
         response = predictModel(image)
-        return jsonify({'result': response})
+        print(response)
+        return jsonify(response)
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=3000, host='0.0.0.0')
+
+#running this command for create new tag
+#docker buildx build --platform linux/amd64 -t flask-server .                                    
+#docker tag flask-server asia-southeast1-docker.pkg.dev/flask-server-418411/cloudrun-flask/flask-server:version
+#docker push asia-southeast1-docker.pkg.dev/flask-server-418411/cloudrun-flask/flask-server:version

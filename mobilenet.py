@@ -27,8 +27,16 @@ def predictModel(fileImage):
     # predictions = infer(tf.constant(img_array))
 
     predicted_class_index = np.argmax(predictions)
+    predicted_prob = np.max(predictions, axis=1)
+    print('predicted_class_index: ', predicted_class_index)
+    print('predicted_prob: ', predicted_prob)
+
     class_labels = ['normal', 'pothole']
     predicted_class_label = class_labels[predicted_class_index]
 
+    status = predicted_class_label == 'pothole'
+
     # result = decode_predictions(predictions, top=3)[0]
-    return predicted_class_label
+    predicted_prob_percent = f"{predicted_prob[0] * 100:.2f}%"
+    return {
+        'status': status, 'confidence': predicted_prob_percent}
